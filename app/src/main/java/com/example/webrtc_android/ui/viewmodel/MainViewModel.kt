@@ -230,10 +230,6 @@ class MainViewModel @Inject constructor(
         webRTCFactory.initSurfaceView(remoteSurface)
     }
 
-    fun switchCamera() {
-        webRTCFactory.switchCamera()
-    }
-
     fun findNextMatch() {
         rtcClient?.onDestroy()
         viewModelScope.launch {

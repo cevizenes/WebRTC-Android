@@ -46,9 +46,8 @@ fun ChatSection(chatItems: List<ChatItems>) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = if (chatItem.isMine) Arrangement.Start else Arrangement.End
             ) {
-                // Each message inside a Card
                 Card(
-                    modifier = Modifier.widthIn(0.dp, 320.dp), // Max width of 80% of screen width
+                    modifier = Modifier.widthIn(0.dp, 320.dp),
                     shape = MaterialTheme.shapes.medium,
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {

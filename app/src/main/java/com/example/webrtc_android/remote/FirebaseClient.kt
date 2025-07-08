@@ -1,7 +1,6 @@
 package com.example.webrtc_android.remote
 
 import android.util.Log
-import com.example.webrtc_android.remote.StatusDataModelTypes.LookingForMatch
 import com.example.webrtc_android.utils.FirebaseFieldNames
 import com.example.webrtc_android.utils.MatchState
 import com.example.webrtc_android.utils.SharedPrefHelper
@@ -32,17 +31,17 @@ class FirebaseClient @Inject constructor(
     fun observeUserStatus(callback: (MatchState) -> Unit) {
         coroutineScope.launch {
             removeSelfData()
-            updateSelfStatus(StatusDataModel(type = LookingForMatch))
+            updateSelfStatus(StatusDataModel(type = StatusDataModelTypes.LookingForMatch))
 
             val userId = prefHelper.getUserId()
             val statusRef = database.child(FirebaseFieldNames.USERS).child(userId)
                 .child(FirebaseFieldNames.STATUS)
 
             statusRef.addValueEventListener(object : ValueEventListener() {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.getValue(StatusDataModel::class.java)?.let { status ->
+                override fun onDataChange(p0: DataSnapshot) {
+                    p0.getValue(StatusDataModel::class.java)?.let { status ->
                         val newState = when (status.type) {
-                            LookingForMatch -> MatchState.LookingForMatchState
+                            StatusDataModelTypes.LookingForMatch -> MatchState.LookingForMatchState
                             StatusDataModelTypes.OfferedMatch -> MatchState.OfferedMatchState(status.participant!!)
                             StatusDataModelTypes.ReceivedMatch -> MatchState.ReceivedMatchState(status.participant!!)
                             StatusDataModelTypes.IDLE -> MatchState.IDLE
@@ -51,11 +50,11 @@ class FirebaseClient @Inject constructor(
                         }
 
                         newState?.let { callback(it) } ?: coroutineScope.launch {
-                            updateSelfStatus(StatusDataModel(type = LookingForMatch))
+                            updateSelfStatus(StatusDataModel(type = StatusDataModelTypes.LookingForMatch))
                             callback(MatchState.LookingForMatchState)
                         }
                     } ?: coroutineScope.launch {
-                        updateSelfStatus(StatusDataModel(type = LookingForMatch))
+                        updateSelfStatus(StatusDataModel(type = StatusDataModelTypes.LookingForMatch))
                         callback(MatchState.LookingForMatchState)
                     }
                 }
@@ -66,10 +65,10 @@ class FirebaseClient @Inject constructor(
     fun observeIncomingSignals(callback: (SignalDataModel) -> Unit) {
         database.child(FirebaseFieldNames.USERS).child(prefHelper.getUserId())
             .child(FirebaseFieldNames.DATA).addValueEventListener(object : ValueEventListener() {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    super.onDataChange(snapshot)
+                override fun onDataChange(p0: DataSnapshot) {
+                    super.onDataChange(p0)
                     runCatching {
-                        gson.fromJson(snapshot.value.toString(), SignalDataModel::class.java)
+                        gson.fromJson(p0.value.toString(), SignalDataModel::class.java)
                     }.onSuccess {
                         if (it != null) callback(it)
                     }.onFailure {
@@ -116,11 +115,11 @@ class FirebaseClient @Inject constructor(
 
     private fun findAvailableParticipant(callback: (String?) -> Unit) {
         database.child(FirebaseFieldNames.USERS).orderByChild("status/type")
-            .equalTo(LookingForMatch.name)
+            .equalTo(StatusDataModelTypes.LookingForMatch.name)
             .addListenerForSingleValueEvent(object : ValueEventListener() {
-                override fun onDataChange(snapshot: DataSnapshot) {
+                override fun onDataChange(p0: DataSnapshot) {
                     var foundTarget: String? = null
-                    snapshot.children.forEach { childSnapshot ->
+                    p0.children.forEach { childSnapshot ->
                         if (childSnapshot.key != prefHelper.getUserId()) {
                             foundTarget = childSnapshot.key
                             return@forEach
@@ -129,7 +128,7 @@ class FirebaseClient @Inject constructor(
                     callback(foundTarget)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(p0: DatabaseError) {
                     callback(null)
                 }
             })

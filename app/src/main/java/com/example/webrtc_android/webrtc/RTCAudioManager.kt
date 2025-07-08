@@ -400,11 +400,8 @@ class RTCAudioManager(context: Context) {
 
     companion object {
         private const val TAG = "AppRTCAudioManager"
-        private const val SPEAKERPHONE_AUTO = "auto"
-        private const val SPEAKERPHONE_TRUE = "true"
         private const val SPEAKERPHONE_FALSE = "false"
 
-        /** Construction.  */
         fun create(context: Context): RTCAudioManager {
             return RTCAudioManager(context)
         }

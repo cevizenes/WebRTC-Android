@@ -1,4 +1,3 @@
-
 package com.example.webrtc_android.ui.screens
 
 import android.widget.Toast
@@ -42,7 +41,6 @@ import com.example.webrtc_android.utils.ChatItems
 fun ChatScreen() {
     val viewModel: MainViewModel = hiltViewModel()
 
-    val matchState by viewModel.matchState.collectAsState()
     val chatState by viewModel.chatList.collectAsState()
     val chatText = remember { mutableStateOf("") }
     val context = LocalContext.current

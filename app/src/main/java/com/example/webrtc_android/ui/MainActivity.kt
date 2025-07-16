@@ -30,8 +30,8 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .windowInsetsPadding(WindowInsets.systemBars)
                 ) {
-                    //ChatScreen()
-                    CameraScreen()
+                    ChatScreen()
+                    //CameraScreen()
                 }
             }
         }

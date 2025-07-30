@@ -36,17 +36,24 @@ This project is a modern Android application that combines real-time video calli
 
 ## 📱 Screenshots
 
-### Device 1 Chat Screen
-![Device 1 Chat Screen](screenshots/Screenshot_20250730_173833.png)
-
-### Device 2 Chat Screen
-![Device 2 Chat Screen](screenshots/Screenshot_20250730_173813.png)
-
-### Device 1 is in Looking For Match State
-![Device 1 Looking For Match for Video Call](screenshots/Screenshot_20250730_173909.png)
-
-### Device 2 After Connection
-![Device 2 Video Call](screenshots/Screenshot_20250730_173928.png)
+<table>
+  <tr>
+    <td align="center"><b>Device 1 Chat Screen</b></td>
+    <td align="center"><b>Device 2 Chat Screen</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20250730_173833.png" width="300"/></td>
+    <td><img src="screenshots/Screenshot_20250730_173813.png" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Device 1 is in Looking For Match State</b></td>
+    <td align="center"><b>Device 2 After Connection</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20250730_173909.png" width="300"/></td>
+    <td><img src="screenshots/Screenshot_20250730_173928.png" width="300"/></td>
+  </tr>
+</table>
 
 ## 🏗️ Project Structure
 
